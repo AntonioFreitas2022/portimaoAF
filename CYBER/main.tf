@@ -19,7 +19,7 @@ resource "aws_subnet" "cyber_private1" {
   vpc_id                                         = aws_vpc.CyberSecurity.id
 }
 
-resource "aws_subnet" "cyber_private3" {
+resource "aws_subnet" "cyber_private2" {
   availability_zone                              = var.avail_zone
   cidr_block                                     = "10.0.2.0/24"
   tags                                           = {
@@ -93,7 +93,7 @@ resource "aws_route_table_association" "cyber_private1" {
 
 resource "aws_route_table_association" "cyber_private2" {
   route_table_id = aws_route_table.cyber_private2.id
-  subnet_id      = aws_subnet.cyber_private3.id
+  subnet_id      = aws_subnet.cyber_private2.id
 }
 
 resource "aws_route_table_association" "cyber_public1" {
