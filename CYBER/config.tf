@@ -10,8 +10,8 @@ install mysql-workbench-community
 snap connect mysql-workbench-community:password-manager-service :password-manager-service
 snap install brave
 snap install thunderbird
-sudo adduser xrdp ssl-cert
-passwd ubuntu
+adduser xrdp ssl-cert
+echo -e "ubuntu\nPassw0rd" | passwd ubuntu
 echo xfce4-session > /home/ubuntu/.xsession
 chown ubuntu:ubuntu /home/ubuntu/.xsession
 sudo systemctl enable --now xrdp
