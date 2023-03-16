@@ -96,14 +96,14 @@ resource "aws_route_table_association" "cyber_private2" {
   subnet_id      = aws_subnet.cyber_private2.id
 }
 
-resource "aws_route_table_association" "cyber_public1" {
-  route_table_id = aws_route_table.cyber_public1.id
-  subnet_id      = aws_subnet.cyber_public1.id
-}
-
 resource "aws_route_table_association" "cyber_private3" {
   route_table_id = aws_route_table.cyber_private3.id
   subnet_id      = aws_subnet.cyber_private3.id
+}
+
+resource "aws_route_table_association" "cyber_public1" {
+  route_table_id = aws_route_table.cyber_public1.id
+  subnet_id      = aws_subnet.cyber_public1.id
 }
 
 resource "aws_vpc_endpoint" "CyberSecurity-vpce-s3" {
@@ -124,7 +124,7 @@ resource "aws_vpc_endpoint" "CyberSecurity-vpce-s3" {
     aws_route_table.cyber_private1.id,
     aws_route_table.cyber_private2.id,
     aws_route_table.cyber_private3.id,
-  ]
+    ]
   service_name          = var.vpc_ep_svc_name
   tags                  = {
     "Name" = "CyberSecurity-vpce-s3"
@@ -193,10 +193,9 @@ resource "aws_vpc_security_group_ingress_rule" "cyber_nos_enta" {
     "Name" = "ENTA NOS IP address"
   }
 }
-
 resource "aws_vpc_security_group_ingress_rule" "cyber_meo_enta" {
   cidr_ipv4              = "83.240.158.54/32"
-  description            = "ENTA MEO"
+  description            = "ENTA"
   ip_protocol            = "-1"
   security_group_id      = aws_security_group.cyber_default.id
   tags                   = {
@@ -205,7 +204,7 @@ resource "aws_vpc_security_group_ingress_rule" "cyber_meo_enta" {
 }
 resource "aws_instance" "desktop" {
   ami                                  = var.deb_based
-  instance_type                        = var.desktop_type
+  instance_type                        = "c5a.large"
   key_name                             = aws_key_pair.CyberSecurity.key_name
   network_interface {
     device_index         = 0
@@ -247,7 +246,7 @@ resource "aws_network_interface" "desktop_cyber_private2" {
     aws_security_group.cyber_default.id,
   ]
   source_dest_check  = false
-  subnet_id          = aws_subnet.cyber_private3.id
+  subnet_id          = aws_subnet.cyber_private2.id
   tags                                 = {
     "Name" = "CyberSecurity private2 interface"
   }
@@ -264,6 +263,7 @@ resource "aws_network_interface" "desktop_cyber_private3" {
     "Name" = "CyberSecurity private3 interface"
   }
 }
+
 resource "aws_network_interface" "desktop_cyber_public1" {
   private_ips         = ["10.0.0.10"]
   security_groups    = [
@@ -286,3 +286,4 @@ resource "aws_eip" "cyber_public_ip" {
     aws_instance.desktop
   ]
 }
+
