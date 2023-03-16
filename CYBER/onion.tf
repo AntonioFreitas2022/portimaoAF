@@ -1,4 +1,4 @@
-resource "aws_instance" "desktop" {
+resource "aws_instance" "onion" {
   ami                                  = var.deb_based
   instance_type                        = var.onion_type
   key_name                             = aws_key_pair.CyberSecurity.key_name
@@ -20,19 +20,12 @@ resource "aws_instance" "desktop" {
   root_block_device {
     delete_on_termination = true
     tags                                 = {
-      "Name" = "Volume for onion"
+      "Name" = "Volume for desktop"
     }
     volume_size           = 30
     volume_type           = "gp2"
   }
   user_data = data.template_file.onion.rendered
-}
-resource "aws_efs_file_system" "onion" {
-  creation_token = "my-product"
-
-  tags = {
-    Name = "MyProduct"
-  }
 }
 
 resource "aws_network_interface" "desktop_onion_private1" {
@@ -70,5 +63,4 @@ resource "aws_network_interface" "desktop_onion_private3" {
     "Name" = "CyberSecurity onion private3 interface"
   }
 }
-
 

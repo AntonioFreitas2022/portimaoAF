@@ -17,13 +17,11 @@ snap connect mysql-workbench-community:password-manager-service :password-manage
 snap install brave
 snap install thunderbird
 adduser xrdp ssl-cert
-echo -e "ubuntu\nPassw0rd" | passwd ubuntu
 echo xfce4-session > /home/ubuntu/.xsession
 chown ubuntu:ubuntu /home/ubuntu/.xsession
 systemctl enable --now xrdp
 EOF
 }
-
 
 data "template_file" "onion" {
   template = <<EOF
@@ -34,7 +32,6 @@ SCRIPT_LOG_DETAIL="$LOGFILE"_$(basename "$0").log
 exec 3>&1 4>&2
 trap 'exec 2>&4 1>&3' 0 1 2 3
 exec 1>$SCRIPT_LOG_DETAIL 2>&1
-
 hostnamectl set-hostname onion
 apt-get update
 apt-get upgrade
@@ -43,7 +40,6 @@ apt install -y xrdp filezilla
 apt install -y mysql-workbench-community
 snap install brave
 adduser xrdp ssl-cert
-echo -e "ubuntu\nPassw0rd" | passwd ubuntu
 echo xfce4-session > /home/ubuntu/.xsession
 chown ubuntu:ubuntu /home/ubuntu/.xsession
 systemctl enable --now xrdp

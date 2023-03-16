@@ -1,4 +1,3 @@
-
 variable "deb_based" {
   type = string
   default = "ami-0557a15b87f6559cf"
@@ -18,7 +17,6 @@ variable "onion_type" {
   type = string
   default = "c5a.large"
 }
-
 
 variable "vpc_ep_svc_name" {
   type = string
