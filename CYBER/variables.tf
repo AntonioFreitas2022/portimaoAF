@@ -9,6 +9,11 @@ variable "avail_zone" {
   default = "us-east-1a"
 }
 
+variable "desktop_type" {
+  type = string
+  default = "c5a.large"
+}
+
 variable "vpc_ep_svc_name" {
   type = string
   default = "com.amazonaws.us-east-1.s3"
